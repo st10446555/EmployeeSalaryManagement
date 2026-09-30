@@ -1,0 +1,42 @@
+@* Bongani Nkosana Tshabalala | ST10446555
+   Programming 2B - ICE Task 3 | Emeris Pretoria Campus | 30 September 2026 *@
+@model IEnumerable<EmployeeSalaryManagement.Models.Salary>
+
+@{
+    ViewData["Title"] = "Salaries";
+}
+
+<h1>Salaries</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee</th>
+            <th>Salary Month</th>
+            <th>Employed</th>
+            <th>Hourly Rate</th>
+            <th>Hours Worked</th>
+            <th>Total Salary</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@(item.Employee != null ? $"{item.Employee.Name} {item.Employee.Surname}" : "-")</td>
+            <td>@(item.SalaryMonth?.ToString("yyyy-MM-dd") ?? "-")</td>
+            <td>@item.Employed</td>
+            <td>@(item.HourlyRate?.ToString("F2") ?? "-")</td>
+            <td>@(item.HoursWorked?.ToString() ?? "-")</td>
+            <td>@(item.TotalSalary?.ToString("F2") ?? "-")</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SalaryId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a asp-action="Delete" asp-route-id="@item.SalaryId" class="btn btn-sm btn-outline-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

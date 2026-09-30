@@ -1,0 +1,59 @@
+@* Bongani Nkosana Tshabalala | ST10446555
+   Programming 2B - ICE Task 3 | Emeris Pretoria Campus | 30 September 2026 *@
+@model EmployeeSalaryManagement.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<h1>Employee Details</h1>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Name)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Surname)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Surname)</dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Address)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Address)</dd>
+    </dl>
+</div>
+
+<h4>Salary Records</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Salary Month</th>
+            <th>Employed</th>
+            <th>Hourly Rate</th>
+            <th>Hours Worked</th>
+            <th>Total Salary</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@if (Model.Salaries != null) {
+    @foreach (var salary in Model.Salaries) {
+        <tr>
+            <td>@(salary.SalaryMonth?.ToString("yyyy-MM-dd") ?? "-")</td>
+            <td>@salary.Employed</td>
+            <td>@(salary.HourlyRate?.ToString("F2") ?? "-")</td>
+            <td>@(salary.HoursWorked?.ToString() ?? "-")</td>
+            <td>@(salary.TotalSalary?.ToString("F2") ?? "-")</td>
+            <td>
+                <a asp-controller="Salaries" asp-action="Edit" asp-route-id="@salary.SalaryId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a asp-controller="Salaries" asp-action="Delete" asp-route-id="@salary.SalaryId" class="btn btn-sm btn-outline-danger">Delete</a>
+            </td>
+        </tr>
+    }
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EmployeeId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
